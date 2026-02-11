@@ -1,0 +1,1004 @@
+/* ==========================================================================
+   Pico — Pico CSS Extensions
+   A minimal component & utility layer on top of Pico CSS v2
+   ========================================================================== */
+
+/* ==========================================================================
+   1. Design Tokens
+   ========================================================================== */
+
+/* --- Semantic Color Tokens --- */
+
+[data-theme="light"],
+:root:not([data-theme="dark"]) {
+  --pico-color-info: #3b82f6;
+  --pico-color-success: #16a34a;
+  --pico-color-warning: #d97706;
+  --pico-color-danger: #dc2626;
+}
+
+@media only screen and (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    --pico-color-info: #60a5fa;
+    --pico-color-success: #4ade80;
+    --pico-color-warning: #fbbf24;
+    --pico-color-danger: #f87171;
+  }
+}
+
+[data-theme="dark"] {
+  --pico-color-info: #60a5fa;
+  --pico-color-success: #4ade80;
+  --pico-color-warning: #fbbf24;
+  --pico-color-danger: #f87171;
+}
+
+/* --- Variant System ---
+   [variant="<name>"] sets --color, which is then mapped to all --pico-primary-* tokens.
+   Works on any element: buttons, tags, callouts, cards, etc.
+   You can also set --color directly via inline style.
+   -------------------------------------------------------- */
+
+:where([variant]) {
+  --color: var(--pico-primary);
+}
+
+/* Semantic variants */
+[variant="info"] {
+  --color: var(--pico-color-info);
+}
+[variant="success"] {
+  --color: var(--pico-color-success);
+}
+[variant="warning"] {
+  --color: var(--pico-color-warning);
+}
+[variant="danger"] {
+  --color: var(--pico-color-danger);
+}
+
+/* Named color variants */
+[variant="red"] {
+  --color: #d93526;
+}
+[variant="pink"] {
+  --color: #d92662;
+}
+[variant="fuchsia"] {
+  --color: #d9269d;
+}
+[variant="purple"] {
+  --color: #9236a4;
+}
+[variant="violet"] {
+  --color: #9236a4;
+}
+[variant="indigo"] {
+  --color: #524ed2;
+}
+[variant="blue"] {
+  --color: #3c71f7;
+}
+[variant="azure"] {
+  --color: #017fc0;
+}
+[variant="cyan"] {
+  --color: #058686;
+}
+[variant="jade"] {
+  --color: #00895a;
+}
+[variant="green"] {
+  --color: #398712;
+}
+[variant="lime"] {
+  --color: #a5d601;
+}
+[variant="yellow"] {
+  --color: #f2df0d;
+}
+[variant="amber"] {
+  --color: #ffbf00;
+}
+[variant="pumpkin"] {
+  --color: #ff9500;
+}
+[variant="orange"] {
+  --color: #d24317;
+}
+[variant="zinc"] {
+  --color: #6f7887;
+}
+[variant="slate"] {
+  --color: #687899;
+}
+[variant="gray"] {
+  --color: #777777;
+}
+[variant="sand"] {
+  --color: #7b776b;
+}
+
+article[variant] {
+  background-color: var(--pico-primary-background);
+  --pico-color: var(--pico-primary-inverse);
+  --pico-h1-color: var(--pico-primary-inverse);
+  --pico-h2-color: var(--pico-primary-inverse);
+  --pico-h3-color: var(--pico-primary-inverse);
+  --pico-h4-color: var(--pico-primary-inverse);
+  --pico-h5-color: var(--pico-primary-inverse);
+  --pico-h6-color: var(--pico-primary-inverse);
+}
+
+/* Map --color → Pico primary tokens (light mode) */
+[data-theme="light"],
+:root:not([data-theme="dark"]),
+:host(:not([data-theme="dark"])) {
+  &[variant],
+  [variant],
+  [style*="--color"] {
+    --pico-primary: var(--color);
+    --pico-primary-background: var(--color);
+    --pico-primary-border: var(--color);
+    --pico-primary-underline: oklch(from var(--color) l c h / 0.5);
+    --pico-primary-hover: color-mix(in oklch, var(--color), black 15%);
+    --pico-primary-hover-background: color-mix(
+      in oklch,
+      var(--color),
+      black 10%
+    );
+    --pico-primary-hover-border: var(--pico-primary-hover-background);
+    --pico-primary-hover-underline: var(--pico-primary-hover);
+    --pico-primary-focus: oklch(from var(--color) calc(l + 0.1) c h / 0.5);
+    --pico-primary-inverse: oklch(
+      from var(--color) calc((0.7 - l) * infinity) 0 0
+    );
+  }
+}
+
+/* Map --color → Pico primary tokens (dark mode via media query) */
+@media only screen and (prefers-color-scheme: dark) {
+  :root:not([data-theme]),
+  :host(:not([data-theme])) {
+    &[variant],
+    [variant],
+    [style*="--color"] {
+      --pico-primary: var(--color);
+      --pico-primary-background: var(--color);
+      --pico-primary-border: var(--pico-primary-background);
+      --pico-primary-underline: oklch(from var(--color) l c h / 0.5);
+      --pico-primary-hover: color-mix(in oklch, var(--color), white 30%);
+      --pico-primary-hover-background: color-mix(
+        in oklch,
+        var(--color),
+        black 20%
+      );
+      --pico-primary-hover-border: var(--pico-primary-hover-background);
+      --pico-primary-hover-underline: var(--pico-primary-hover);
+      --pico-primary-focus: oklch(from var(--color) l c h / 0.375);
+      --pico-primary-inverse: oklch(
+        from var(--color) calc((0.7 - l) * infinity) 0 0
+      );
+    }
+  }
+}
+
+/* Map --color → Pico primary tokens (dark mode via data-theme) */
+[data-theme="dark"] {
+  &[variant],
+  [variant],
+  [style*="--color"] {
+    --pico-primary: var(--color);
+    --pico-primary-background: var(--color);
+    --pico-primary-border: var(--pico-primary-background);
+    --pico-primary-underline: oklch(from var(--color) l c h / 0.5);
+    --pico-primary-hover: color-mix(in oklch, var(--color), white 30%);
+    --pico-primary-hover-background: color-mix(
+      in oklch,
+      var(--color),
+      black 20%
+    );
+    --pico-primary-hover-border: var(--pico-primary-hover-background);
+    --pico-primary-hover-underline: var(--pico-primary-hover);
+    --pico-primary-focus: oklch(from var(--color) l c h / 0.375);
+    --pico-primary-inverse: oklch(
+      from var(--color) calc((0.7 - l) * infinity) 0 0
+    );
+  }
+}
+
+/* Size attribute */
+[size="small"] {
+  font-size: 0.875em;
+}
+[size="large"] {
+  font-size: 1.125em;
+}
+[size="x-large"] {
+  font-size: 1.25em;
+}
+
+/* Always set background-color for data-theme */
+[data-theme] {
+  background-color: var(--pico-background-color);
+}
+
+/* ==========================================================================
+   2. Typography & Base
+   ========================================================================== */
+
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: anywhere;
+}
+
+p {
+  hyphens: auto;
+}
+
+p:last-child {
+  margin-bottom: 0;
+}
+
+textarea,
+html-editor {
+  hyphens: manual;
+  field-sizing: content;
+  resize: vertical;
+  min-height: 9em;
+}
+
+body {
+  min-height: 100dvh;
+}
+
+/* en dash as default list style */
+@counter-style dash {
+  system: cyclic;
+  symbols: "–";
+  suffix: "  ";
+}
+
+ul li {
+  list-style: revert;
+}
+
+ul > li {
+  list-style: dash;
+}
+
+/* emphasize dt and first legend in fieldset */
+dt,
+fieldset > legend:first-of-type {
+  font-weight: bold;
+}
+
+/* remove empty small tags */
+small:empty {
+  display: none;
+}
+
+/* make tooltips wrap on long text */
+[data-tooltip]::before {
+  max-width: max(100%, 20ch);
+  width: max-content;
+  white-space: initial;
+  text-indent: 0;
+}
+
+/* ==========================================================================
+   3. Layout Primitives
+   ========================================================================== */
+
+:is(
+    [class*="cluster"],
+    [class*="flank"],
+    [class*="frame"],
+    [class*="grid"],
+    [class*="stack"],
+    [class*="split"]
+  )
+  > * {
+  margin-block: 0;
+  margin-inline: 0;
+}
+
+:where(
+  [class*="cluster"],
+  [class*="flank"],
+  [class*="frame"],
+  [class*="grid"],
+  [class*="stack"],
+  [class*="split"]
+) {
+  gap: var(--pico-spacing);
+  margin-bottom: var(--pico-spacing);
+}
+
+/* --- Cluster --- */
+
+[class*="cluster"] {
+  display: flex;
+  > * {
+    width: initial;
+  }
+}
+
+:where([class*="cluster"]) {
+  align-items: center;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
+
+/* --- Flank --- */
+
+[class*="flank"] {
+  display: flex;
+  --content-percentage: initial;
+  --flank-size: initial;
+}
+
+[class*="flank"]:not([class*="\:end"]) > :first-child,
+[class*="flank"][class*="\:start"] > :first-child {
+  flex-basis: var(--flank-size, auto);
+  flex-grow: 1;
+}
+
+[class*="flank"]:not([class*="\:end"]) > :last-child,
+[class*="flank"][class*="\:start"] > :last-child {
+  flex-basis: 0;
+  flex-grow: 999;
+  min-inline-size: var(--content-percentage, 50%);
+}
+
+[class*="flank"][class*="\:end"] > :last-child {
+  flex-basis: var(--flank-size, auto);
+  flex-grow: 1;
+}
+
+[class*="flank"][class*="\:end"] > :first-child {
+  flex-basis: 0;
+  flex-grow: 999;
+  min-inline-size: var(--content-percentage, 50%);
+}
+
+:where([class*="flank"]) {
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+/* --- Frame --- */
+
+[class*="frame"] {
+  display: flex;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+}
+
+[class*="frame"] > img,
+[class*="frame"] > video {
+  block-size: 100%;
+  inline-size: 100%;
+  object-fit: cover;
+}
+
+[class*="frame"][class*="\:square"] {
+  aspect-ratio: 1 / 1;
+}
+
+[class*="frame"][class*="\:landscape"] {
+  aspect-ratio: 16 / 9;
+}
+
+[class*="frame"][class*="\:portrait"] {
+  aspect-ratio: 9 / 16;
+}
+
+:where([class*="frame"]) {
+  align-items: center;
+  justify-content: center;
+}
+
+/* --- Grid --- */
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(
+    auto-fit,
+    minmax(min(var(--min-column-size, 20ch), 100%), 1fr)
+  );
+  --min-column-size: initial;
+}
+
+.wa-span-grid {
+  grid-column: 1 / -1;
+}
+
+/* --- Split --- */
+
+[class*="split"] {
+  display: flex;
+}
+
+[class*="split"],
+[class*="split"][class*="\:row"] {
+  flex-direction: row;
+  block-size: auto;
+  inline-size: 100%;
+}
+
+[class*="split"]:not([class*="\:column"]) > :first-child {
+  flex: 0 1 auto;
+}
+
+[class*="split"][class*="\:column"] {
+  flex-direction: column;
+  block-size: auto;
+  inline-size: auto;
+  align-self: stretch;
+}
+
+:where([class*="split"]) {
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+/* --- Stack --- */
+
+.stack {
+  display: flex;
+  flex-direction: column;
+}
+
+:where(.stack) {
+  align-items: stretch;
+  justify-content: flex-start;
+}
+
+/* ==========================================================================
+   4. Buttons
+   ========================================================================== */
+
+/* --- Raised / 3D Button --- */
+
+:root {
+  --pico-button-3d-depth: 0.3em;
+  --pico-button-3d-shadow-color: color-mix(
+    var(--pico-muted-color),
+    transparent 50%
+  );
+}
+
+:is(
+  button,
+  [role="button"],
+  input[type="submit"],
+  input[type="button"],
+  input[type="reset"]
+).raised,
+.raised
+  :is(
+    button,
+    [role="button"],
+    input[type="submit"],
+    input[type="button"],
+    input[type="reset"]
+  ) {
+  position: relative;
+  transform: translateY(0);
+  box-shadow: 0 var(--pico-button-3d-depth) 0 0
+    var(--pico-button-3d-shadow-color);
+  transition:
+    transform 0.1s ease,
+    box-shadow 0.1s ease;
+
+  &:active {
+    transform: translateY(var(--pico-button-3d-depth));
+    box-shadow: 0 0 0 0 var(--pico-button-3d-shadow-color);
+  }
+
+  &:disabled,
+  &[aria-busy="true"] {
+    transform: translateY(0);
+    box-shadow: 0 var(--pico-button-3d-depth) 0 0
+      var(--pico-button-3d-shadow-color);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :is(
+    button,
+    [role="button"],
+    input[type="submit"],
+    input[type="button"],
+    input[type="reset"]
+  ).raised {
+    transition: none;
+  }
+}
+
+/* --- Plain / Ghost Button --- */
+
+:is(
+  button,
+  [type="submit"],
+  [type="button"],
+  [role="button"],
+  [type="reset"]
+).plain {
+  --pico-border-color: transparent;
+  --pico-background-color: transparent;
+  --pico-color: var(--pico-primary);
+
+  &:is(:hover, :active, :focus) {
+    --pico-background-color: color-mix(
+      var(--pico-primary-hover-background) 5%,
+      transparent
+    );
+  }
+}
+
+/* ==========================================================================
+   5. Form Enhancements
+   ========================================================================== */
+
+/* Remove margin from form elements inside grids */
+.grid :is(input:not([type="checkbox"], [type="radio"]), select, textarea) {
+  margin-bottom: 0;
+}
+
+/* Spacing between stacked labels */
+/*label + label:not(:has(input[type="checkbox"], input[type="radio"])) {
+  margin-top: var(--pico-form-element-spacing-vertical);
+}*/
+
+/* Label as button */
+label[role="button"] {
+  cursor: pointer;
+  margin-bottom: 0;
+  display: inline-block;
+}
+
+/* Checkbox checked styling with mask icon */
+[type="checkbox"]:not([role="switch"]):checked:is(:checked, :active, :focus) {
+  --pico-background-color: var(--pico-primary-background);
+  --pico-border-color: var(--pico-primary-border);
+  position: relative;
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 0.75em;
+    height: 0.75em;
+    background-color: var(--pico-primary-inverse);
+    mask-image: var(--pico-icon-checkbox);
+    mask-position: center;
+    mask-size: 0.75em auto;
+    mask-repeat: no-repeat;
+  }
+}
+
+/* Loading spinner via mask */
+[aria-busy="true"]:not(input, select, textarea, html, form)::before {
+  mask-image: var(--pico-icon-loading);
+  mask-position: center;
+  mask-size: contain;
+  mask-repeat: no-repeat;
+  background: currentColor;
+}
+
+[aria-busy="true"]:not(input, select, textarea):is(
+    button,
+    [type="submit"],
+    [type="button"],
+    [type="reset"],
+    [role="button"]
+  ):not(.outline)::before {
+  filter: unset;
+}
+
+/* ==========================================================================
+   6. Components
+   ========================================================================== */
+
+/* --- Close Button (shared by tags, callouts, toasts) --- */
+
+:is(pico-tag[removable], .callout) .close {
+  all: unset;
+  cursor: pointer;
+  width: 1rem;
+  height: 1rem;
+  transition: background-color var(--pico-transition);
+  flex-shrink: 0;
+  background-color: color-mix(in oklch, currentColor, transparent 30%);
+  mask: var(--pico-icon-close) no-repeat center / contain;
+
+  &:hover {
+    background-color: currentColor;
+  }
+}
+
+/* --- Callouts --- */
+
+.callout {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--pico-spacing);
+  padding: var(--pico-spacing);
+  margin-bottom: var(--pico-spacing);
+  border-radius: var(--pico-border-radius);
+  border: var(--pico-border-width) solid var(--pico-primary-border);
+  color: var(--pico-color);
+  background: color-mix(
+    in srgb,
+    var(--pico-primary),
+    var(--pico-background-color) 90%
+  );
+
+  .callout-content {
+    flex: 1;
+  }
+
+  .callout-content > :last-child {
+    margin-bottom: 0;
+  }
+
+  strong,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    color: var(--pico-primary);
+  }
+}
+
+/* --- Tags (<pico-tag>) --- */
+
+pico-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25em;
+  padding: 0.2em 0.6em;
+  font-size: 0.875em;
+  line-height: 1.5;
+  border-radius: var(--pico-border-radius);
+  border: var(--pico-border-width) solid var(--color);
+  background: var(--pico-primary-background);
+  color: var(--pico-primary-inverse);
+  white-space: nowrap;
+  vertical-align: baseline;
+}
+
+pico-tag[pill] {
+  border-radius: 5em;
+}
+
+pico-tag[outlined] {
+  background: transparent;
+  color: var(--pico-primary);
+}
+
+/* --- Rating (<pico-rating>) --- */
+
+pico-rating {
+  display: inline-flex;
+  gap: 0.1em;
+  color: var(--pico-muted-border-color);
+
+  .star {
+    cursor: pointer;
+    transition:
+      color var(--pico-transition),
+      transform 0.15s ease;
+    user-select: none;
+
+    &.active {
+      color: var(--pico-primary);
+    }
+
+    &:hover {
+      transform: scale(1.15);
+    }
+  }
+
+  &[readonly] .star {
+    cursor: default;
+    pointer-events: none;
+  }
+
+  &:focus-visible {
+    outline: var(--pico-outline-width) solid var(--pico-primary-focus);
+    outline-offset: 0.25em;
+    border-radius: var(--pico-border-radius);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  pico-rating .star {
+    transition: none;
+
+    &:hover {
+      transform: none;
+    }
+  }
+}
+
+/* --- Multi-select (<pico-multiselect>) --- */
+
+pico-multiselect {
+  display: block;
+  position: relative;
+  margin-bottom: var(--pico-spacing);
+
+  .multiselect-field {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: var(--pico-nav-link-spacing-horizontal);
+    padding: calc(
+        var(--pico-nav-link-spacing-vertical) - var(--pico-border-width) * 2
+      )
+      var(--pico-nav-link-spacing-horizontal);
+    border: var(--pico-border-width) solid var(--pico-form-element-border-color);
+    border-radius: var(--pico-border-radius);
+    background: var(--pico-form-element-background-color);
+    color: var(--pico-form-element-color);
+    cursor: pointer;
+    transition: border-color var(--pico-transition);
+
+    &:focus-visible {
+      outline: none;
+      border-color: var(--pico-form-element-active-border-color);
+      box-shadow: 0 0 0 var(--pico-outline-width)
+        var(--pico-form-element-focus-color);
+    }
+
+    &:hover {
+      border-color: var(--pico-form-element-active-border-color);
+    }
+
+    .placeholder {
+      color: var(--pico-form-element-placeholder-color);
+      flex: 1;
+    }
+
+    .caret {
+      margin-inline-start: auto;
+      padding-inline-start: 0.5em;
+      width: 1rem;
+      height: 1rem;
+      background: var(--pico-icon-chevron) center / contain no-repeat;
+      transition: transform var(--pico-transition);
+    }
+  }
+
+  &[open] {
+    .multiselect-field {
+      border-color: var(--pico-form-element-active-border-color);
+      border-bottom-left-radius: 0;
+      border-bottom-right-radius: 0;
+    }
+
+    .multiselect-dropdown {
+      display: block;
+    }
+  }
+
+  .multiselect-dropdown {
+    display: none;
+    position: absolute;
+    z-index: 100;
+    width: 100%;
+    max-height: 15em;
+    overflow-y: auto;
+    margin-top: calc(var(--pico-border-width) * -1);
+    padding: 0;
+    list-style: none;
+    background: var(--pico-dropdown-background-color);
+    border: var(--pico-border-width) solid
+      var(--pico-form-element-active-border-color);
+    border-top: none;
+    border-radius: 0 0 var(--pico-border-radius) var(--pico-border-radius);
+    box-shadow: var(--pico-dropdown-box-shadow);
+
+    label {
+      display: flex;
+      align-items: center;
+      gap: 0.5em;
+      padding: 0.5em var(--pico-form-element-spacing-horizontal);
+      margin: 0;
+      cursor: pointer;
+      transition: background-color var(--pico-transition);
+
+      &:hover {
+        background: var(--pico-dropdown-hover-background-color);
+      }
+
+      input[type="checkbox"] {
+        margin: 0;
+      }
+    }
+  }
+
+  pico-tag {
+    font-size: 0.8em;
+  }
+}
+
+/* --- Toast Container --- */
+
+#toast-container {
+  position: fixed;
+  inset: var(--pico-spacing);
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: var(--pico-spacing);
+  pointer-events: none;
+}
+
+#toast-container > .callout {
+  box-shadow: var(--pico-box-shadow);
+  animation: toast-in 0.3s ease forwards;
+  pointer-events: auto;
+  margin-bottom: 0;
+}
+
+#toast-container > .callout.removing {
+  animation: toast-out 0.3s ease forwards;
+}
+
+@keyframes toast-in {
+  from {
+    opacity: 0;
+    transform: translateX(1em);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes toast-out {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateX(1em);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #toast-container > .callout {
+    animation-duration: 0.01ms;
+  }
+
+  #toast-container > .callout.removing {
+    animation-duration: 0.01ms;
+  }
+}
+
+/* --- Modal Adjustments --- */
+
+dialog {
+  padding: 0;
+}
+
+dialog > article {
+  max-height: calc(100dvh - var(--pico-spacing) * 2);
+  max-width: min(50rem, calc(100dvw - var(--pico-spacing) * 2));
+}
+
+dialog > article > header {
+  position: sticky;
+  top: calc(var(--pico-block-spacing-vertical) * -1);
+}
+
+dialog > article > footer {
+  position: sticky;
+  bottom: calc(var(--pico-block-spacing-vertical) * -1);
+}
+
+:not(dialog) > article > :last-child {
+  margin-bottom: 0;
+}
+
+/* --- Dropdown Adjustments --- */
+
+.dropdown.no-chevron > [role="button"]::after {
+  content: none;
+}
+
+.dropdown > ul {
+  max-height: 20rem;
+  overflow-y: auto;
+}
+
+/* ==========================================================================
+   7. Utilities
+   ========================================================================== */
+
+@media not (min-width: 768px) {
+  .desktop-only {
+    display: none !important;
+  }
+}
+
+@media (min-width: 768px) {
+  .mobile-only {
+    display: none !important;
+  }
+}
+
+.sr-only {
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  position: absolute;
+  overflow: hidden;
+}
+
+[hidden] {
+  display: none;
+}
+
+:is(
+  button,
+  [role="button"],
+  input[type="submit"],
+  input[type="button"],
+  input[type="reset"]
+):has(svg:only-child) {
+  /* HACK passt das so??? */
+  --pico-form-element-spacing-horizontal: 1rem;
+}
+
+details.dropdown.no-chevron::after {
+  content: none;
+}
+
+[role="textbox"] {
+  padding: var(--pico-form-element-spacing-vertical)
+    var(--pico-form-element-spacing-horizontal);
+
+  --pico-background-color: var(--pico-form-element-background-color);
+  --pico-border-color: var(--pico-form-element-border-color);
+  --pico-color: var(--pico-form-element-color);
+  --pico-box-shadow: none;
+  border: var(--pico-border-width) solid var(--pico-border-color);
+  border-radius: var(--pico-border-radius);
+  outline: none;
+  background-color: var(--pico-background-color);
+  box-shadow: var(--pico-box-shadow);
+  color: var(--pico-color);
+  font-weight: var(--pico-font-weight);
+  transition:
+    background-color var(--pico-transition),
+    border-color var(--pico-transition),
+    color var(--pico-transition),
+    box-shadow var(--pico-transition);
+
+  &:not(readonly):is(:active, :focus, :focus-within) {
+    --pico-background-color: var(--pico-form-element-active-background-color);
+    --pico-border-color: var(--pico-form-element-active-border-color);
+  }
+}

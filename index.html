@@ -1,0 +1,1510 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
+    <title>Pico X - Component Showcase</title>
+    <link rel="stylesheet" href="node_modules/@picocss/pico/css/pico.css" />
+    <link rel="stylesheet" href="pico-x.css" />
+    <script type="importmap">
+      {
+        "imports": {
+          "@picocss/pico/": "./node_modules/@picocss/pico/",
+          "@peakman/dagger.js": "./node_modules/@peakman/dagger.js/dagger.js",
+          "squire-rte": "./node_modules/squire-rte/dist/squire.mjs",
+          "dompurify": "./node_modules/dompurify/dist/purify.es.mjs"
+        }
+      }
+    </script>
+    <script
+      type="module"
+      src="node_modules/@peakman/dagger.js/dagger.js"
+    ></script>
+    <style>
+      .sample {
+        position: relative;
+        margin-top: var(--pico-spacing);
+      }
+      .sample pre {
+        margin: 0;
+      }
+      .sample .copy-btn {
+        position: absolute;
+        top: 0.5em;
+        right: 0.5em;
+        font-size: 0.75rem;
+        padding: 0.25em 0.6em;
+        margin: 0;
+        cursor: pointer;
+      }
+      .color-grid {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5em;
+      }
+      .color-grid button,
+      .color-grid a[role="button"] {
+        width: auto;
+        margin: 0;
+      }
+      nav .theme-switcher {
+        margin: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <header class="container">
+      <div class="split">
+        <nav>
+          <ul>
+            <li><h1>Pico X</h1></li>
+          </ul>
+        </nav>
+        <div class="cluster">
+          <details class="dropdown">
+            <summary role="button" class="outline secondary">
+              Components
+            </summary>
+            <ul>
+              <li><a href="#variants">Variants</a></li>
+              <li><a href="#buttons">Buttons</a></li>
+              <li><a href="#tags">Tags</a></li>
+              <li><a href="#callouts">Callouts</a></li>
+              <li><a href="#rating">Rating</a></li>
+              <li><a href="#multiselect">Multi-select</a></li>
+              <li><a href="#toasts">Toasts</a></li>
+              <li><a href="#modal">Modal</a></li>
+              <li><a href="#layout">Layout</a></li>
+              <li><a href="#forms">Forms</a></li>
+              <li><a href="#utilities">Utilities</a></li>
+              <li><a href="#split-panel">Split Panel</a></li>
+              <li><a href="#squire-editor">Squire Editor</a></li>
+            </ul>
+          </details>
+          <details class="dropdown theme-switcher">
+            <summary role="button" class="outline secondary">Theme</summary>
+            <ul>
+              <li><a href="#" data-theme-set="auto">Auto</a></li>
+              <li><a href="#" data-theme-set="light">Light</a></li>
+              <li><a href="#" data-theme-set="dark">Dark</a></li>
+            </ul>
+          </details>
+        </div>
+      </div>
+      <p>
+        A minimal component and utility layer on top of
+        <a href="https://picocss.com">Pico CSS v2</a>. Semantic HTML first,
+        class-light, fully themeable.
+      </p>
+    </header>
+
+    <main class="container stack">
+      <!-- Variant System -->
+      <section id="variants">
+        <h2>Variant System</h2>
+        <p>
+          Add <code>variant="name"</code> to any element to remap all
+          <code>--pico-primary-*</code> tokens. Works on buttons, cards, tags,
+          callouts. You can also set <code>--color</code> directly via inline
+          style.
+        </p>
+
+        <h3>Semantic variants</h3>
+        <div class="color-grid">
+          <button variant="info">Info</button>
+          <button variant="success">Success</button>
+          <button variant="warning">Warning</button>
+          <button variant="danger">Danger</button>
+        </div>
+
+        <h3>Named color variants</h3>
+        <div class="color-grid">
+          <button variant="red">Red</button>
+          <button variant="pink">Pink</button>
+          <button variant="fuchsia">Fuchsia</button>
+          <button variant="purple">Purple</button>
+          <button variant="violet">Violet</button>
+          <button variant="indigo">Indigo</button>
+          <button variant="blue">Blue</button>
+          <button variant="azure">Azure</button>
+          <button variant="cyan">Cyan</button>
+          <button variant="jade">Jade</button>
+          <button variant="green">Green</button>
+          <button variant="lime">Lime</button>
+          <button variant="yellow">Yellow</button>
+          <button variant="amber">Amber</button>
+          <button variant="pumpkin">Pumpkin</button>
+          <button variant="orange">Orange</button>
+          <button variant="gray">Gray</button>
+          <button variant="sand">Sand</button>
+          <button variant="slate">Slate</button>
+          <button variant="zinc">Zinc</button>
+        </div>
+
+        <h3>Custom color via inline style</h3>
+        <div class="color-grid">
+          <button style="--color: #e91e63">Custom Pink</button>
+          <button style="--color: #009688" class="outline">
+            Custom Teal Outline
+          </button>
+          <a href="#" role="button" style="--color: #ff5722">Link Button</a>
+        </div>
+
+        <h3>Variant on cards</h3>
+        <div class="grid">
+          <article variant="info">
+            <h4>Info Card</h4>
+            <p>An article with <code>variant="info"</code>.</p>
+          </article>
+          <article variant="success">
+            <h4>Success Card</h4>
+            <p>An article with <code>variant="success"</code>.</p>
+          </article>
+          <article variant="danger">
+            <h4>Danger Card</h4>
+            <p>An article with <code>variant="danger"</code>.</p>
+          </article>
+        </div>
+
+        <h3>Size attribute</h3>
+        <p>
+          <span size="small">Small text</span> &middot; Normal text &middot;
+          <span size="large">Large text</span> &middot;
+          <span size="x-large">X-Large text</span>
+        </p>
+
+        <div class="sample">
+          <button class="copy-btn outline secondary" onclick="copySource(this)">
+            Copy
+          </button>
+          <pre><code>&lt;!-- Semantic variant --&gt;
+&lt;button variant="success"&gt;Save&lt;/button&gt;
+
+&lt;!-- Named color --&gt;
+&lt;button variant="indigo"&gt;Indigo&lt;/button&gt;
+
+&lt;!-- Custom inline color --&gt;
+&lt;button style="--color: #e91e63"&gt;Custom&lt;/button&gt;
+
+&lt;!-- Variant on any element --&gt;
+&lt;article variant="info"&gt;
+  &lt;h4&gt;Info Card&lt;/h4&gt;
+  &lt;p&gt;Content here.&lt;/p&gt;
+&lt;/article&gt;
+
+&lt;!-- Size attribute --&gt;
+&lt;span size="small"&gt;Small&lt;/span&gt;
+&lt;span size="large"&gt;Large&lt;/span&gt;</code></pre>
+        </div>
+      </section>
+
+      <!-- Buttons -->
+      <section id="buttons">
+        <h2>Buttons</h2>
+
+        <h3>Standard Pico buttons</h3>
+        <div class="grid">
+          <button>Primary</button>
+          <button class="secondary">Secondary</button>
+          <button class="contrast">Contrast</button>
+        </div>
+        <div class="grid">
+          <button class="outline">Primary Outline</button>
+          <button class="outline secondary">Secondary Outline</button>
+          <button class="outline contrast">Contrast Outline</button>
+        </div>
+
+        <h3>Raised / 3D button</h3>
+        <p>Add <code>.raised</code> for a push-down effect on click.</p>
+        <div class="grid">
+          <button class="raised">Raised Primary</button>
+          <button class="raised secondary">Raised Secondary</button>
+          <button class="raised" variant="success">Raised Success</button>
+          <button class="raised" variant="danger">Raised Danger</button>
+        </div>
+
+        <h3>Plain / Ghost button</h3>
+        <p>Add <code>.plain</code> for a transparent, text-only button.</p>
+        <div class="color-grid">
+          <button class="plain">Plain Primary</button>
+          <button class="plain" variant="danger">Plain Danger</button>
+          <button class="plain" variant="success">Plain Success</button>
+        </div>
+
+        <h3>Variants on buttons</h3>
+        <div class="color-grid">
+          <button variant="info">Info</button>
+          <button variant="success">Success</button>
+          <button variant="warning">Warning</button>
+          <button variant="danger">Danger</button>
+          <button variant="danger" class="outline">Danger Outline</button>
+        </div>
+
+        <h3>States</h3>
+        <div class="color-grid">
+          <button disabled>Disabled</button>
+          <button aria-busy="true">Loading&hellip;</button>
+          <button aria-busy="true" class="secondary" disabled>
+            Please wait&hellip;
+          </button>
+        </div>
+
+        <div class="sample">
+          <button class="copy-btn outline secondary" onclick="copySource(this)">
+            Copy
+          </button>
+          <pre><code>&lt;!-- Raised --&gt;
+&lt;button class="raised"&gt;Push me&lt;/button&gt;
+&lt;button class="raised" variant="success"&gt;Save&lt;/button&gt;
+
+&lt;!-- Plain / Ghost --&gt;
+&lt;button class="plain"&gt;Cancel&lt;/button&gt;
+&lt;button class="plain" variant="danger"&gt;Delete&lt;/button&gt;
+
+&lt;!-- Variant buttons --&gt;
+&lt;button variant="danger"&gt;Delete&lt;/button&gt;
+&lt;button variant="danger" class="outline"&gt;Delete Outline&lt;/button&gt;
+
+&lt;!-- Loading --&gt;
+&lt;button aria-busy="true"&gt;Loading&hellip;&lt;/button&gt;</code></pre>
+        </div>
+      </section>
+
+      <!-- Tags -->
+      <section id="tags">
+        <h2>Tags</h2>
+        <p>
+          Inline label elements using <code>&lt;pico-tag&gt;</code>. Filled by
+          default; add <code>outlined</code> for outlined,
+          <code>removable</code> for dismiss, <code>pill</code> for rounded.
+        </p>
+
+        <h3>Filled (default)</h3>
+        <p>
+          <pico-tag>Default</pico-tag>
+          <pico-tag variant="info">Info</pico-tag>
+          <pico-tag variant="success">Success</pico-tag>
+          <pico-tag variant="warning">Warning</pico-tag>
+          <pico-tag variant="danger">Danger</pico-tag>
+        </p>
+
+        <h3>Outlined</h3>
+        <p>
+          <pico-tag outlined>Default</pico-tag>
+          <pico-tag outlined variant="info">Info</pico-tag>
+          <pico-tag outlined variant="success">Success</pico-tag>
+          <pico-tag outlined variant="warning">Warning</pico-tag>
+          <pico-tag outlined variant="danger">Danger</pico-tag>
+        </p>
+
+        <h3>Pill shape</h3>
+        <p>
+          <pico-tag pill>Default</pico-tag>
+          <pico-tag pill variant="info">Info</pico-tag>
+          <pico-tag pill outlined variant="success">Success</pico-tag>
+        </p>
+
+        <h3>Removable</h3>
+        <p>
+          <pico-tag removable>Removable</pico-tag>
+          <pico-tag removable variant="info">Click &times; to remove</pico-tag>
+          <pico-tag removable pill variant="success">Pill removable</pico-tag>
+          <pico-tag removable outlined variant="warning"
+            >Outlined removable</pico-tag
+          >
+        </p>
+
+        <h3>Named color variants</h3>
+        <p>
+          <pico-tag variant="indigo">Indigo</pico-tag>
+          <pico-tag variant="pink">Pink</pico-tag>
+          <pico-tag variant="cyan">Cyan</pico-tag>
+          <pico-tag variant="amber">Amber</pico-tag>
+          <pico-tag variant="lime">Lime</pico-tag>
+        </p>
+
+        <h3>Custom colors</h3>
+        <p>
+          <pico-tag style="--color: #ff6b35">Custom Orange</pico-tag>
+          <pico-tag outlined style="--color: #9b59b6">Purple</pico-tag>
+          <pico-tag style="--color: #1abc9c">Turquoise</pico-tag>
+        </p>
+
+        <h3>Inline usage</h3>
+        <p>
+          Notifications <pico-tag>3</pico-tag> or status
+          <pico-tag variant="success">Active</pico-tag> indicators.
+        </p>
+
+        <div class="sample">
+          <button class="copy-btn outline secondary" onclick="copySource(this)">
+            Copy
+          </button>
+          <pre><code>&lt;pico-tag&gt;Default&lt;/pico-tag&gt;
+&lt;pico-tag variant="info"&gt;Info&lt;/pico-tag&gt;
+&lt;pico-tag outlined&gt;Outlined&lt;/pico-tag&gt;
+&lt;pico-tag pill&gt;Pill&lt;/pico-tag&gt;
+&lt;pico-tag removable variant="success"&gt;Removable&lt;/pico-tag&gt;
+&lt;pico-tag style="--color: #ff6b35"&gt;Custom&lt;/pico-tag&gt;</code></pre>
+        </div>
+      </section>
+
+      <!-- Callouts -->
+      <section id="callouts">
+        <h2>Callouts</h2>
+        <p>
+          Contextual message blocks using <code>.callout</code> with optional
+          <code>variant</code>. Pure CSS, no JavaScript needed.
+        </p>
+
+        <aside class="callout">
+          <div class="callout-content">
+            <strong>Note:</strong> Default callout using the primary theme
+            color.
+          </div>
+        </aside>
+        <aside class="callout" variant="info">
+          <div class="callout-content">
+            <strong>Info:</strong> Here is some useful information you should
+            know about.
+          </div>
+        </aside>
+        <aside class="callout" variant="success">
+          <div class="callout-content">
+            <strong>Success!</strong> The operation completed without any
+            issues.
+          </div>
+        </aside>
+        <aside class="callout" variant="warning">
+          <div class="callout-content">
+            <strong>Warning:</strong> Please review the details before
+            proceeding.
+          </div>
+        </aside>
+        <aside class="callout" variant="danger">
+          <div class="callout-content">
+            <strong>Error:</strong> Something went wrong. Please try again.
+          </div>
+        </aside>
+
+        <h3>Callout with rich content</h3>
+        <aside class="callout" variant="info">
+          <div class="callout-content">
+            <h4>Callout heading</h4>
+            <p>
+              Callouts can contain any HTML content including paragraphs, lists,
+              and code.
+            </p>
+            <ul>
+              <li>Point one</li>
+              <li>Point two</li>
+            </ul>
+          </div>
+        </aside>
+
+        <div class="sample">
+          <button class="copy-btn outline secondary" onclick="copySource(this)">
+            Copy
+          </button>
+          <pre><code>&lt;aside class="callout"&gt;
+  &lt;div class="callout-content"&gt;
+    &lt;strong&gt;Note:&lt;/strong&gt; Default callout.
+  &lt;/div&gt;
+&lt;/aside&gt;
+
+&lt;aside class="callout" variant="info"&gt;
+  &lt;div class="callout-content"&gt;
+    &lt;strong&gt;Info:&lt;/strong&gt; Informational message.
+  &lt;/div&gt;
+&lt;/aside&gt;
+
+&lt;aside class="callout" variant="success"&gt;...&lt;/aside&gt;
+&lt;aside class="callout" variant="warning"&gt;...&lt;/aside&gt;
+&lt;aside class="callout" variant="danger"&gt;...&lt;/aside&gt;</code></pre>
+        </div>
+      </section>
+
+      <!-- Rating -->
+      <section id="rating">
+        <h2>Rating</h2>
+        <p>
+          Star rating input via <code>&lt;pico-rating&gt;</code>. Click stars or
+          use arrow keys. Participates in forms via a hidden input.
+        </p>
+
+        <form id="rating-form">
+          <label
+            >Rate this (5 stars)
+            <pico-rating name="score" value="3" max="5"></pico-rating
+          ></label>
+          <label
+            >Detailed (10 stars)
+            <pico-rating
+              name="detail"
+              value="7"
+              max="10"
+              variant="yellow"
+            ></pico-rating
+          ></label>
+          <label
+            >Custom color
+            <pico-rating
+              name="custom"
+              value="2"
+              max="5"
+              variant="danger"
+            ></pico-rating
+          ></label>
+          <label
+            >Read-only display
+            <pico-rating value="4" max="5" readonly></pico-rating
+          ></label>
+        </form>
+        <p><small id="rating-output">Current score: 3</small></p>
+
+        <div class="sample">
+          <button class="copy-btn outline secondary" onclick="copySource(this)">
+            Copy
+          </button>
+          <pre><code>&lt;pico-rating name="score" value="3" max="5"&gt;&lt;/pico-rating&gt;
+&lt;pico-rating name="detail" value="7" max="10" variant="yellow"&gt;&lt;/pico-rating&gt;
+&lt;pico-rating value="4" max="5" readonly&gt;&lt;/pico-rating&gt;</code></pre>
+        </div>
+      </section>
+
+      <!-- Multi-select -->
+      <section id="multiselect">
+        <h2>Multi-select</h2>
+        <p>
+          Dropdown with tag-based selection via
+          <code>&lt;pico-multiselect&gt;</code>. Define options as
+          <code>&lt;option&gt;</code> children.
+        </p>
+
+        <form id="multi-form">
+          <label>
+            Pick your languages
+            <pico-multiselect
+              name="languages"
+              placeholder="Select languages&hellip;"
+            >
+              <option value="js">JavaScript</option>
+              <option value="ts" selected>TypeScript</option>
+              <option value="py">Python</option>
+              <option value="rs" selected>Rust</option>
+              <option value="go">Go</option>
+              <option value="rb">Ruby</option>
+              <option value="java">Java</option>
+              <option value="cs">C#</option>
+            </pico-multiselect>
+          </label>
+          <label>
+            Favorite colors
+            <pico-multiselect name="colors" placeholder="Choose colors&hellip;">
+              <option value="red">Red</option>
+              <option value="blue">Blue</option>
+              <option value="green">Green</option>
+              <option value="yellow">Yellow</option>
+              <option value="purple">Purple</option>
+            </pico-multiselect>
+          </label>
+        </form>
+        <p><small id="multi-output">Selected: TypeScript, Rust</small></p>
+
+        <div class="sample">
+          <button class="copy-btn outline secondary" onclick="copySource(this)">
+            Copy
+          </button>
+          <pre><code>&lt;pico-multiselect name="languages" placeholder="Select&hellip;"&gt;
+  &lt;option value="js"&gt;JavaScript&lt;/option&gt;
+  &lt;option value="ts" selected&gt;TypeScript&lt;/option&gt;
+  &lt;option value="py"&gt;Python&lt;/option&gt;
+  &lt;option value="rs" selected&gt;Rust&lt;/option&gt;
+&lt;/pico-multiselect&gt;</code></pre>
+        </div>
+      </section>
+
+      <!-- Toasts -->
+      <section id="toasts">
+        <h2>Toasts</h2>
+        <p>
+          Temporary notifications via
+          <code>PicoToast.show(message, options)</code>. Styled as callouts,
+          positioned top-right. Auto-dismiss after 3s; set
+          <code>duration: 0</code> for persistent.
+        </p>
+
+        <div class="grid">
+          <button data-toast="This is a default toast.">Default Toast</button>
+          <button
+            data-toast="Here is some useful information."
+            data-variant="info"
+          >
+            Info Toast
+          </button>
+          <button
+            class="raised"
+            data-toast="Operation completed!"
+            data-variant="success"
+          >
+            Success Toast
+          </button>
+          <button data-toast="Please check your input." data-variant="warning">
+            Warning Toast
+          </button>
+          <button data-toast="Something went wrong!" data-variant="danger">
+            Danger Toast
+          </button>
+          <button
+            data-toast="This one stays until dismissed."
+            data-variant="info"
+            data-duration="0"
+            class="outline"
+          >
+            Persistent Toast
+          </button>
+        </div>
+
+        <div class="sample">
+          <button class="copy-btn outline secondary" onclick="copySource(this)">
+            Copy
+          </button>
+          <pre><code>import { PicoToast } from "./js/pico.js";
+
+PicoToast.show("Saved!", { variant: "success" });
+PicoToast.show("Oops!", { variant: "danger", duration: 5000 });
+PicoToast.show("Sticky", { variant: "info", duration: 0 });
+
+// Dismiss programmatically
+const t = PicoToast.show("Working...");
+PicoToast.dismiss(t);</code></pre>
+        </div>
+      </section>
+
+      <!-- Modal -->
+      <section id="modal">
+        <h2>Modal</h2>
+        <p>
+          Uses the native <code>&lt;dialog&gt;</code> element with Pico CSS
+          transitions. Open/close via <code>PicoModal</code>.
+        </p>
+
+        <div class="grid">
+          <button data-target="demo-modal" class="modal-trigger">
+            Open Modal
+          </button>
+          <button
+            data-target="demo-modal-confirm"
+            class="modal-trigger"
+            variant="danger"
+          >
+            Confirm Dialog
+          </button>
+        </div>
+
+        <div class="sample">
+          <button class="copy-btn outline secondary" onclick="copySource(this)">
+            Copy
+          </button>
+          <pre><code>&lt;button data-target="my-modal" class="modal-trigger"&gt;Open&lt;/button&gt;
+
+&lt;dialog id="my-modal"&gt;
+  &lt;article&gt;
+    &lt;header&gt;
+      &lt;button aria-label="Close" rel="prev" class="modal-close"&gt;&lt;/button&gt;
+      &lt;h3&gt;Modal Title&lt;/h3&gt;
+    &lt;/header&gt;
+    &lt;p&gt;Content goes here.&lt;/p&gt;
+    &lt;footer&gt;
+      &lt;button class="secondary modal-close"&gt;Cancel&lt;/button&gt;
+      &lt;button class="modal-close"&gt;Confirm&lt;/button&gt;
+    &lt;/footer&gt;
+  &lt;/article&gt;
+&lt;/dialog&gt;
+
+&lt;script type="module"&gt;
+  import { PicoModal } from "./js/pico.js";
+  PicoModal.open(document.getElementById("my-modal"));
+  PicoModal.close(document.getElementById("my-modal"));
+&lt;/script&gt;</code></pre>
+        </div>
+      </section>
+
+      <!-- Layout Primitives -->
+      <section id="layout">
+        <h2>Layout Primitives</h2>
+        <p>
+          CSS-only layout classes. Each resets child margins and uses
+          <code>--pico-spacing</code> as the default gap.
+        </p>
+
+        <h3>Cluster</h3>
+        <p>Horizontal flex wrap. Use for tag groups, button rows, etc.</p>
+        <div class="cluster">
+          <pico-tag variant="info">One</pico-tag>
+          <pico-tag variant="success">Two</pico-tag>
+          <pico-tag variant="warning">Three</pico-tag>
+          <pico-tag variant="danger">Four</pico-tag>
+          <pico-tag variant="purple">Five</pico-tag>
+        </div>
+
+        <h3>Stack</h3>
+        <p>Vertical flex column.</p>
+        <div class="stack">
+          <div>Item 2</div>
+          <div>Item 3</div>
+          <div>Item 1</div>
+        </div>
+
+        <h3>Split</h3>
+        <p>Space-between row. Use for header/action bars.</p>
+        <div class="split">
+          <strong>Title</strong>
+          <button class="outline" style="width: auto; margin: 0">Action</button>
+        </div>
+
+        <h3>Grid</h3>
+        <p>
+          Auto-fit grid with configurable
+          <code>--min-column-size</code> (default: 20ch).
+        </p>
+        <div class="grid" style="--min-column-size: 15ch">
+          <div
+            style="
+              padding: 1em;
+              background: var(--pico-primary-focus);
+              text-align: center;
+            "
+          >
+            A
+          </div>
+          <div
+            style="
+              padding: 1em;
+              background: var(--pico-primary-focus);
+              text-align: center;
+            "
+          >
+            B
+          </div>
+          <div
+            style="
+              padding: 1em;
+              background: var(--pico-primary-focus);
+              text-align: center;
+            "
+          >
+            C
+          </div>
+          <div
+            style="
+              padding: 1em;
+              background: var(--pico-primary-focus);
+              text-align: center;
+            "
+          >
+            D
+          </div>
+        </div>
+
+        <h3>Frame</h3>
+        <p>
+          Aspect-ratio container. Supports <code>:square</code>,
+          <code>:landscape</code>, <code>:portrait</code>.
+        </p>
+        <div class="grid" style="--min-column-size: 10ch">
+          <div
+            class="frame:square"
+            style="background: var(--pico-primary-focus); max-width: 150px"
+          >
+            <span>1:1</span>
+          </div>
+          <div
+            class="frame:landscape"
+            style="background: var(--pico-primary-focus); max-width: 200px"
+          >
+            <span>16:9</span>
+          </div>
+          <div
+            class="frame:portrait"
+            style="background: var(--pico-primary-focus); max-width: 100px"
+          >
+            <span>9:16</span>
+          </div>
+        </div>
+
+        <div class="sample">
+          <button class="copy-btn outline secondary" onclick="copySource(this)">
+            Copy
+          </button>
+          <pre><code>&lt;div class="cluster"&gt;...&lt;/div&gt;
+&lt;div class="stack"&gt;...&lt;/div&gt;
+&lt;div class="split"&gt;...&lt;/div&gt;
+&lt;div class="grid" style="--min-column-size: 15ch"&gt;...&lt;/div&gt;
+&lt;div class="frame:landscape"&gt;&lt;img src="photo.jpg"&gt;&lt;/div&gt;
+&lt;div class="flank"&gt;&lt;aside&gt;Sidebar&lt;/aside&gt;&lt;main&gt;Content&lt;/main&gt;&lt;/div&gt;</code></pre>
+        </div>
+      </section>
+
+      <!-- Form Enhancements -->
+      <section id="forms">
+        <h2>Form Enhancements</h2>
+
+        <h3>Input groups</h3>
+        <div role="group">
+          <input type="email" placeholder="Enter your email" />
+          <button>Subscribe</button>
+        </div>
+
+        <h3>Validation states</h3>
+        <div class="grid">
+          <label
+            >Valid
+            <input type="text" placeholder="Valid input" aria-invalid="false"
+          /></label>
+          <label
+            >Invalid
+            <input type="text" placeholder="Invalid input" aria-invalid="true"
+          /></label>
+          <label
+            >Disabled <input type="text" placeholder="Disabled" disabled
+          /></label>
+        </div>
+
+        <h3>Variant-colored checkboxes</h3>
+        <fieldset>
+          <label><input type="checkbox" checked /> Default checked</label>
+          <label variant="success"
+            ><input type="checkbox" checked /> Success variant</label
+          >
+          <label variant="danger"
+            ><input type="checkbox" checked /> Danger variant</label
+          >
+        </fieldset>
+
+        <h3>Switch</h3>
+        <label
+          ><input type="checkbox" role="switch" checked /> Enable
+          notifications</label
+        >
+
+        <div class="sample">
+          <button class="copy-btn outline secondary" onclick="copySource(this)">
+            Copy
+          </button>
+          <pre><code>&lt;div class="has-icon-left"&gt;
+  &lt;svg class="icon"&gt;&hellip;&lt;/svg&gt;
+  &lt;input type="search" placeholder="Search&hellip;"&gt;
+&lt;/div&gt;
+
+&lt;div role="group"&gt;
+  &lt;input type="email" placeholder="Email"&gt;
+  &lt;button&gt;Subscribe&lt;/button&gt;
+&lt;/div&gt;
+
+&lt;input type="text" aria-invalid="false"&gt;
+&lt;input type="text" aria-invalid="true"&gt;
+
+&lt;label variant="success"&gt;
+  &lt;input type="checkbox" checked&gt; Success
+&lt;/label&gt;</code></pre>
+        </div>
+      </section>
+
+      <!-- Pico Basics -->
+      <section id="pico-basics">
+        <h2>Pico Basics</h2>
+
+        <h3>Accordion</h3>
+        <details>
+          <summary>Accordion item 1</summary>
+          <p>Content for the first accordion item.</p>
+        </details>
+        <details open>
+          <summary>Accordion item 2 (open)</summary>
+          <ul>
+            <li>List item inside an accordion.</li>
+            <li>No JavaScript needed.</li>
+          </ul>
+        </details>
+
+        <h3>Table</h3>
+        <div class="overflow-auto">
+          <table class="striped">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Role</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">1</th>
+                <td>Alice</td>
+                <td>alice@example.com</td>
+                <td>
+                  <pico-tag variant="info" size="small">Admin</pico-tag>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">2</th>
+                <td>Bob</td>
+                <td>bob@example.com</td>
+                <td>
+                  <pico-tag variant="success" size="small">Editor</pico-tag>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">3</th>
+                <td>Carol</td>
+                <td>carol@example.com</td>
+                <td><pico-tag outlined size="small">Viewer</pico-tag></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Dropdown</h3>
+        <details class="dropdown">
+          <summary>Select an option&hellip;</summary>
+          <ul>
+            <li><a href="#">Option 1</a></li>
+            <li><a href="#">Option 2</a></li>
+            <li><a href="#">Option 3</a></li>
+          </ul>
+        </details>
+
+        <h3>Progress</h3>
+        <progress value="65" max="100"></progress>
+        <progress></progress>
+
+        <h3>Loading</h3>
+        <article aria-busy="true" style="min-height: 3em"></article>
+        <button aria-busy="true">Loading&hellip;</button>
+
+        <h3>Tooltip</h3>
+        <p>
+          <span data-tooltip="Tooltip on top">Hover me (top)</span> &middot;
+          <span data-tooltip="Tooltip on bottom" data-placement="bottom"
+            >Hover me (bottom)</span
+          >
+          &middot;
+          <button data-tooltip="Save your changes">Save</button>
+        </p>
+
+        <h3>Breadcrumb</h3>
+        <nav aria-label="breadcrumb">
+          <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Components</a></li>
+            <li>Current Page</li>
+          </ul>
+        </nav>
+      </section>
+
+      <!-- Utilities -->
+      <section id="utilities">
+        <h2>Utilities</h2>
+
+        <h3>Responsive visibility</h3>
+        <p>
+          <code>.desktop-only</code> &mdash; visible at &ge; 768px.<br />
+          <code>.mobile-only</code> &mdash; visible below 768px.<br />
+          <code>.sr-only</code> &mdash; screen-reader only (visually hidden).
+        </p>
+        <div class="grid">
+          <div
+            class="desktop-only"
+            style="
+              padding: 1em;
+              background: var(--pico-primary-focus);
+              text-align: center;
+            "
+          >
+            Visible on desktop only
+          </div>
+          <div
+            class="mobile-only"
+            style="
+              padding: 1em;
+              background: var(--pico-primary-focus);
+              text-align: center;
+            "
+          >
+            Visible on mobile only
+          </div>
+        </div>
+
+        <h3>List style</h3>
+        <p>Unordered lists use an en-dash (&ndash;) by default.</p>
+        <ul>
+          <li>First item with en-dash</li>
+          <li>Second item with en-dash</li>
+          <li>
+            Nested lists revert to default
+            <ul>
+              <li>Nested item</li>
+            </ul>
+          </li>
+        </ul>
+
+        <div class="sample">
+          <button class="copy-btn outline secondary" onclick="copySource(this)">
+            Copy
+          </button>
+          <pre><code>&lt;div class="desktop-only"&gt;Desktop only&lt;/div&gt;
+&lt;div class="mobile-only"&gt;Mobile only&lt;/div&gt;
+&lt;span class="sr-only"&gt;Screen reader only&lt;/span&gt;</code></pre>
+        </div>
+      </section>
+
+      <!-- Usage -->
+      <section id="usage">
+        <h2>Usage</h2>
+        <p>
+          Include the CSS and import the JS module. All web components
+          auto-register on import.
+        </p>
+        <div class="sample">
+          <button class="copy-btn outline secondary" onclick="copySource(this)">
+            Copy
+          </button>
+          <pre><code>&lt;link rel="stylesheet" href="pico.css"&gt;
+
+&lt;script type="module"&gt;
+  import {
+    PicoTag, PicoRating, PicoMultiselect,
+    PicoToast, PicoModal, Pico
+  } from "./js/pico.js";
+
+  PicoToast.show("Hello!", { variant: "success" });
+  PicoModal.open(document.getElementById("my-dialog"));
+&lt;/script&gt;</code></pre>
+        </div>
+      </section>
+
+      <section id="split-panel" +load="{panel: null}">
+        <div>
+          <h2>Split Panel Demo</h2>
+          <div>
+            <label>
+              <input
+                type="radio"
+                autocomplete="off"
+                name="orientation"
+                value="horizontal"
+                checked
+                +change="panel.orientation = $event.target.value"
+              />
+              Horizontal
+            </label>
+            <label>
+              <input
+                type="radio"
+                autocomplete="off"
+                name="orientation"
+                value="vertical"
+                +change="panel.orientation = $event.target.value"
+              />
+              Vertical
+            </label>
+          </div>
+          <div style="margin-top: 10px">
+            <label>
+              <input
+                type="checkbox"
+                +change="console.log(panel.disabled = $event.target.checked)"
+              />
+              Disabled
+            </label>
+            <label>
+              Primary:
+              <select +change="panel.primary = $event.target.value">
+                <option value="">None</option>
+                <option value="start">Start</option>
+                <option value="end">End</option>
+              </select>
+            </label>
+            <p>
+              By default, both panels will grow or shrink proportionally when
+              the host element is resized. If a <code>primary</code> panel is
+              designated, it will maintain its size and the secondary panel will
+              grow or shrink to fit the remaining space. You can set the
+              <code>primary</code> panel attribute to <code>start</code> or
+              <code>end</code>.
+            </p>
+          </div>
+          <div style="margin-top: 10px">
+            <label>
+              Snap:
+              <input
+                type="text"
+                placeholder="e.g., 100px 50% 200px"
+                style="width: 200px"
+                +change="panel.snap = $event.target.value"
+              />
+            </label>
+          </div>
+        </div>
+
+        <pico-split-panel orientation="horizontal" +loaded="panel = $node">
+          <div slot="start" class="panel-content start-panel">
+            <h3>Start Panel</h3>
+            <p>This is the start panel. You can drag the divider to resize.</p>
+            <ul>
+              <li>Use arrow keys to resize (Shift for 10% increments)</li>
+              <li>Press Home/End to jump to extremes</li>
+              <li>Press Enter to collapse/expand</li>
+            </ul>
+          </div>
+          <div slot="end" class="panel-content end-panel">
+            <h3>End Panel</h3>
+            <p>This is the end panel.</p>
+            <p>Try the controls above to change the panel's behavior!</p>
+          </div>
+        </pico-split-panel>
+      </section>
+
+      <section id="squire-editor">
+        <h2>Squire Editor Demo</h2>
+        <p>
+          A simple rich text editor built with the Squire library and Pico
+          components. Try it out!
+        </p>
+        <pico-squire-editor
+          +load="{editor: null, state: {canUndo: false, canRedo: false, i: 0}}"
+          +loaded="editor = $node"
+          +state="state.i++"
+          +undoState="Object.assign(state, $event.detail)"
+          style="--min-height: 10em"
+        >
+          <div slot="toolbar" class="cluster" style="zoom: 0.8">
+            <div role="group" label="Verlauf">
+              <button
+                +click="editor.getSquire().undo()"
+                *disabled="!state.canUndo"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  width="24"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M9 15 3 9m0 0 6-6M3 9h12a6 6 0 0 1 0 12h-3"
+                  />
+                </svg>
+              </button>
+              <button
+                +click="editor.getSquire().redo()"
+                *disabled="!state.canRedo"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  width="24"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="m15 15 6-6m0 0-6-6m6 6H9a6 6 0 0 0 0 12h3"
+                  />
+                </svg>
+              </button>
+            </div>
+
+            <details
+              class="dropdown"
+              +load="{label: null, entries: {
+                p: 'Paragraph',
+                h1: 'Heading 1',
+                h2: 'Heading 2',
+                h3: 'Heading 3',
+                blockquote: 'Block quote'
+              }}"
+            >
+              <summary *text="label || 'Paragraph format'"></summary>
+              <ul>
+                <li *each="entries">
+                  <label
+                    ><input
+                      type="radio"
+                      *value="key"
+                      name="format"
+                      form="editor-nowhere"
+                      +change="editor.toggle(key)"
+                      *watch#0="state && ($node.checked = editor.isActive(key)) && (label = item)"
+                    />${item}</label
+                  >
+                </li>
+              </ul>
+            </details>
+
+            <div role="group" label="Formatierung">
+              <button
+                *each="{
+                b: { label: 'Fett', html: '<strong>B</strong>' },
+                i: { label: 'Kursiv', html: '<i>I</i>' },
+                u: { label: 'Unterstrichen', html: '<u>U</u>' }
+              }"
+                +click="editor.toggle(key)"
+                *class="state && editor.isActive(key) ? '' : 'outline'"
+                *html="item.html || item.label"
+              ></button>
+            </div>
+
+            <div role="group" label="Text alignment">
+              <button +click="editor.changeStyle({textAlign: null})">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  width="24"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25H12"
+                  />
+                </svg>
+              </button>
+              <button +click="editor.changeStyle({textAlign: 'center'})">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  width="24"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"
+                  />
+                </svg>
+              </button>
+              <button +click="editor.changeStyle({textAlign: 'right'})">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  width="24"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M3.75 6.75h16.5M3.75 12h16.5M12 17.25h8.25"
+                  />
+                </svg>
+              </button>
+            </div>
+
+            <div role="group" label="Listen">
+              <button
+                +click="editor.toggle('ul')"
+                *class="state && editor.isActive('ul') ? '' : 'outline'"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  width="24"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M8.25 6.75h12M8.25 12h12m-12 5.25h12M3.75 6.75h.007v.008H3.75V6.75Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0ZM3.75 12h.007v.008H3.75V12Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm-.375 5.25h.007v.008H3.75v-.008Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z"
+                  />
+                </svg>
+              </button>
+              <button
+                +click="editor.toggle('ol')"
+                *class="state && editor.isActive('ol') ? '' : 'outline'"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  width="24"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M8.242 5.992h12m-12 6.003H20.24m-12 5.999h12M4.117 7.495v-3.75H2.99m1.125 3.75H2.99m1.125 0H5.24m-1.92 2.577a1.125 1.125 0 1 1 1.591 1.59l-1.83 1.83h2.16M2.99 15.745h1.125a1.125 1.125 0 0 1 0 2.25H3.74m0-.002h.375a1.125 1.125 0 0 1 0 2.25H2.99"
+                  />
+                </svg>
+              </button>
+            </div>
+
+            <span +load="{input: null}">
+              <input
+                type="file"
+                hidden
+                xinput#stop="fileToDataURI($event.target.files[0]).then(src => editor.getSquire().insertImage(src))"
+                +loaded="input = $node"
+              />
+              <button +click="input.click()">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  width="24"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="m2.25 15.75 5.159-5.159a2.25 2.25 0 0 1 3.182 0l5.159 5.159m-1.5-1.5 1.409-1.409a2.25 2.25 0 0 1 3.182 0l2.909 2.909m-18 3.75h16.5a1.5 1.5 0 0 0 1.5-1.5V6a1.5 1.5 0 0 0-1.5-1.5H3.75A1.5 1.5 0 0 0 2.25 6v12a1.5 1.5 0 0 0 1.5 1.5Zm10.5-11.25h.008v.008h-.008V8.25Zm.375 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z"
+                  />
+                </svg>
+              </button>
+            </span>
+
+            <details
+              class="dropdown no-chevron"
+              +load="{dropdown: null}"
+              +loaded="dropdown = $node"
+            >
+              <summary role="button">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  width="24"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M3.375 19.5h17.25m-17.25 0a1.125 1.125 0 0 1-1.125-1.125M3.375 19.5h7.5c.621 0 1.125-.504 1.125-1.125m-9.75 0V5.625m0 12.75v-1.5c0-.621.504-1.125 1.125-1.125m18.375 2.625V5.625m0 12.75c0 .621-.504 1.125-1.125 1.125m1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125m0 3.75h-7.5A1.125 1.125 0 0 1 12 18.375m9.75-12.75c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125m19.5 0v1.5c0 .621-.504 1.125-1.125 1.125M2.25 5.625v1.5c0 .621.504 1.125 1.125 1.125m0 0h17.25m-17.25 0h7.5c.621 0 1.125.504 1.125 1.125M3.375 8.25c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125m17.25-3.75h-7.5c-.621 0-1.125.504-1.125 1.125m8.625-1.125c.621 0 1.125.504 1.125 1.125v1.5c0 .621-.504 1.125-1.125 1.125m-17.25 0h7.5m-7.5 0c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125M12 10.875v-1.5m0 1.5c0 .621-.504 1.125-1.125 1.125M12 10.875c0 .621.504 1.125 1.125 1.125m-2.25 0c.621 0 1.125.504 1.125 1.125M13.125 12h7.5m-7.5 0c-.621 0-1.125.504-1.125 1.125M20.625 12c.621 0 1.125.504 1.125 1.125v1.5c0 .621-.504 1.125-1.125 1.125m-17.25 0h7.5M12 14.625v-1.5m0 1.5c0 .621-.504 1.125-1.125 1.125M12 14.625c0 .621.504 1.125 1.125 1.125m-2.25 0c.621 0 1.125.504 1.125 1.125m0 1.5v-1.5m0 0c0-.621.504-1.125 1.125-1.125m0 0h7.5"
+                  />
+                </svg>
+              </summary>
+
+              <ul>
+                <li>
+                  <a href="#newTable" +click#prevent="editor.createTable()"
+                    >Tabelle einfügen</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="#addColumn"
+                    +click#prevent="editor.addTableColumn()"
+                    *disabled="state && !editor.isActive('table') ? true :
+                  undefined"
+                    >Spalte rechts einfügen</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="#deleteColumn"
+                    variant="danger"
+                    +click#prevent="editor.deleteTableColumn()"
+                    *disabled="state && !editor.isActive('table') ? true : undefined"
+                    >Spalte löschen</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="#addRow"
+                    +click#prevent="editor.addTableRow()"
+                    *disabled="state && !editor.isActive('table') ? true : undefined"
+                    >Zeile unten einfügen</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="#deleteRow"
+                    variant="danger"
+                    +click#prevent="editor.deleteTableRows()"
+                    *disabled="state && !editor.isActive('table') ? true : undefined"
+                    >Zeile löschen</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="#mergeCells"
+                    +click#prevent="editor.mergeTableCells()"
+                    *disabled="state && !editor.isActive('table') ? true : undefined"
+                    >Zellen verbinden</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="#splitCell"
+                    +click#prevent="editor.splitTableCell()"
+                    *disabled="state && !editor.isActive('table') ? true : undefined"
+                    >Zelle aufteilen</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="#heading"
+                    +click#prevent="editor.toggleTableHeading()"
+                    *disabled="state && !editor.isActive('table') ? true : undefined"
+                    >Zelle ↔ Kopfzelle</a
+                  >
+                </li>
+                <li>
+                  <a
+                    href="#delete"
+                    variant="danger"
+                    +click#prevent="editor.deleteTable()"
+                    *disabled="state && !editor.isActive('table') ? true : undefined"
+                    >Tabelle löschen</a
+                  >
+                </li>
+              </ul>
+            </details>
+          </div>
+        </pico-squire-editor>
+      </section>
+    </main>
+
+    <footer class="container">
+      <small
+        >Built with <a href="https://picocss.com">Pico CSS</a> +
+        <strong>Pico X</strong> components</small
+      >
+    </footer>
+
+    <dialog id="demo-modal">
+      <article>
+        <header>
+          <button aria-label="Close" rel="prev" class="modal-close"></button>
+          <h3>Example Modal</h3>
+        </header>
+        <p>
+          This is a standard modal using the native dialog element with Pico CSS
+          styling and Pico transition helpers.
+        </p>
+        <footer>
+          <button class="secondary modal-close">Close</button>
+          <button class="modal-close">OK</button>
+        </footer>
+      </article>
+    </dialog>
+
+    <dialog id="demo-modal-confirm">
+      <article>
+        <header>
+          <button aria-label="Close" rel="prev" class="modal-close"></button>
+          <h3>Are you sure?</h3>
+        </header>
+        <p>This action cannot be undone. Do you want to proceed?</p>
+        <footer>
+          <button class="secondary modal-close">Cancel</button>
+          <button variant="danger" class="modal-close">Delete</button>
+        </footer>
+      </article>
+    </dialog>
+
+    <script type="module">
+      import { PicoToast, PicoModal } from "./js/pico-x.js";
+
+      // Toast demo
+      document.querySelectorAll("[data-toast]").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          var opts = {};
+          if (btn.dataset.variant) opts.variant = btn.dataset.variant;
+          if (btn.dataset.duration !== undefined)
+            opts.duration = parseInt(btn.dataset.duration, 10);
+          PicoToast.show(btn.dataset.toast, opts);
+        });
+      });
+
+      // Modal demo
+      document.querySelectorAll(".modal-trigger").forEach(function (btn) {
+        btn.addEventListener("click", function (e) {
+          e.preventDefault();
+          var dialog = document.getElementById(btn.dataset.target);
+          if (dialog) PicoModal.open(dialog);
+        });
+      });
+
+      document.querySelectorAll(".modal-close").forEach(function (btn) {
+        btn.addEventListener("click", function () {
+          var dialog = btn.closest("dialog");
+          if (dialog) PicoModal.close(dialog);
+        });
+      });
+
+      // Rating demo
+      var ratingEl = document.querySelector('pico-rating[name="score"]');
+      var ratingOut = document.getElementById("rating-output");
+      if (ratingEl && ratingOut) {
+        ratingEl.addEventListener("change", function () {
+          ratingOut.textContent = "Current score: " + ratingEl.value;
+        });
+      }
+
+      // Multiselect demo
+      var msEl = document.querySelector('pico-multiselect[name="languages"]');
+      var msOut = document.getElementById("multi-output");
+      if (msEl && msOut) {
+        msEl.addEventListener("change", function () {
+          var labels = msEl.value
+            .map(function (v) {
+              var opt = msEl._options.find(function (o) {
+                return o.value === v;
+              });
+              return opt ? opt.label : v;
+            })
+            .join(", ");
+          msOut.textContent = "Selected: " + (labels || "(none)");
+        });
+      }
+
+      // Theme switcher
+      document.querySelectorAll("[data-theme-set]").forEach(function (link) {
+        link.addEventListener("click", function (e) {
+          e.preventDefault();
+          var theme = link.dataset.themeSet;
+          if (theme === "auto") {
+            document.documentElement.removeAttribute("data-theme");
+          } else {
+            document.documentElement.setAttribute("data-theme", theme);
+          }
+        });
+      });
+
+      // Copy source button
+      window.copySource = function (btn) {
+        var code = btn.closest(".sample").querySelector("code");
+        if (!code) return;
+        navigator.clipboard.writeText(code.textContent).then(function () {
+          var orig = btn.textContent;
+          btn.textContent = "Copied!";
+          setTimeout(function () {
+            btn.textContent = orig;
+          }, 1500);
+        });
+      };
+
+      import "./js/split-panel.js";
+      import "./js/squire-editor.js";
+    </script>
+  </body>
+</html>

@@ -1,0 +1,64 @@
+{
+  "name": "pico-x",
+  "version": "0.1.0",
+  "description": "A minimal component and utility layer on top of Pico CSS v2. Semantic HTML first, class-light, fully themeable.",
+  "type": "module",
+  "main": "./index.js",
+  "module": "./index.js",
+  "exports": {
+    ".": "./index.js",
+    "./css": "./pico-x.css",
+    "./components": "./js/pico-x.js",
+    "./split-panel": "./js/split-panel.js",
+    "./squire-editor": "./js/squire-editor.js"
+  },
+  "files": [
+    "index.js",
+    "pico-x.css",
+    "js/pico-x.js",
+    "js/split-panel.js",
+    "js/squire-editor.js",
+    "LICENSE",
+    "README.md"
+  ],
+  "keywords": [
+    "pico",
+    "pico-css",
+    "web-components",
+    "css",
+    "ui",
+    "components",
+    "semantic-html",
+    "tags",
+    "rating",
+    "multiselect",
+    "toast",
+    "modal",
+    "split-panel",
+    "dark-mode"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tommy4st/pico-x.git"
+  },
+  "homepage": "https://github.com/tommy4st/pico-x#readme",
+  "bugs": {
+    "url": "https://github.com/tommy4st/pico-x/issues"
+  },
+  "peerDependencies": {
+    "@picocss/pico": "^2.1.1"
+  },
+  "optionalDependencies": {
+    "squire-rte": "^2.4.2",
+    "dompurify": "^3.3.1"
+  },
+  "devDependencies": {
+    "@peakman/dagger.js": "^0.9.21",
+    "@picocss/pico": "^2.1.1",
+    "@types/bun": "latest",
+    "dompurify": "^3.3.1",
+    "squire-rte": "^2.4.2",
+    "typescript": "^5"
+  }
+}
