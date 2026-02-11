@@ -5,21 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="color-scheme" content="light dark" />
     <title>Pico X - Component Showcase</title>
-    <link rel="stylesheet" href="node_modules/@picocss/pico/css/pico.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css"
+    />
     <link rel="stylesheet" href="pico-x.css" />
     <script type="importmap">
       {
         "imports": {
-          "@picocss/pico/": "./node_modules/@picocss/pico/",
-          "@peakman/dagger.js": "./node_modules/@peakman/dagger.js/dagger.js",
-          "squire-rte": "./node_modules/squire-rte/dist/squire.mjs",
-          "dompurify": "./node_modules/dompurify/dist/purify.es.mjs"
+          "@picocss/pico/": "https://cdn.jsdelivr.net/npm/@picocss/pico@2/",
+          "@peakman/dagger.js": "https://cdn.jsdelivr.net/npm/@peakman/dagger.js@0.9.21/+esm",
+          "squire-rte": "https://cdn.jsdelivr.net/npm/squire-rte@2.4.2/+esm",
+          "dompurify": "https://cdn.jsdelivr.net/npm/dompurify@3.3.1/+esm"
         }
       }
     </script>
     <script
       type="module"
-      src="node_modules/@peakman/dagger.js/dagger.js"
+      src="https://cdn.jsdelivr.net/npm/@peakman/dagger.js@0.9.21/+esm"
     ></script>
     <style>
       .sample {
