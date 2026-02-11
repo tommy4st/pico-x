@@ -131,64 +131,32 @@ article[variant] {
 }
 
 /* Map --color → Pico primary tokens (light mode) */
-[data-theme="light"],
-:root:not([data-theme="dark"]),
-:host(:not([data-theme="dark"])) {
-  &[variant],
-  [variant],
-  [style*="--color"] {
-    --pico-primary: var(--color);
-    --pico-primary-background: var(--color);
-    --pico-primary-border: var(--color);
-    --pico-primary-underline: oklch(from var(--color) l c h / 0.5);
-    --pico-primary-hover: color-mix(in oklch, var(--color), black 15%);
-    --pico-primary-hover-background: color-mix(
-      in oklch,
-      var(--color),
-      black 10%
-    );
-    --pico-primary-hover-border: var(--pico-primary-hover-background);
-    --pico-primary-hover-underline: var(--pico-primary-hover);
-    --pico-primary-focus: oklch(from var(--color) calc(l + 0.1) c h / 0.5);
-    --pico-primary-inverse: oklch(
-      from var(--color) calc((0.7 - l) * infinity) 0 0
-    );
-  }
+:is(
+  [data-theme="light"],
+  :root:not([data-theme="dark"]),
+  :host(:not([data-theme="dark"]))
+):is([variant], [style*="--color"]) {
+  --pico-primary: oklch(from var(--color) min(l, 0.7) c h);
+  --pico-primary-background: var(--color);
+  --pico-primary-border: var(--color);
+  --pico-primary-underline: oklch(from var(--color) l c h / 0.5);
+  --pico-primary-hover: color-mix(in oklch, var(--color), black 15%);
+  --pico-primary-hover-background: color-mix(in oklch, var(--color), black 10%);
+  --pico-primary-hover-border: var(--pico-primary-hover-background);
+  --pico-primary-hover-underline: var(--pico-primary-hover);
+  --pico-primary-focus: oklch(from var(--color) calc(l + 0.1) c h / 0.5);
+  --pico-primary-inverse: oklch(
+    from var(--color) calc((0.7 - l) * infinity) 0 0
+  );
 }
 
 /* Map --color → Pico primary tokens (dark mode via media query) */
 @media only screen and (prefers-color-scheme: dark) {
-  :root:not([data-theme]),
-  :host(:not([data-theme])) {
-    &[variant],
+  :is(:root:not([data-theme]), :host(:not([data-theme]))):is(
     [variant],
-    [style*="--color"] {
-      --pico-primary: var(--color);
-      --pico-primary-background: var(--color);
-      --pico-primary-border: var(--pico-primary-background);
-      --pico-primary-underline: oklch(from var(--color) l c h / 0.5);
-      --pico-primary-hover: color-mix(in oklch, var(--color), white 30%);
-      --pico-primary-hover-background: color-mix(
-        in oklch,
-        var(--color),
-        black 20%
-      );
-      --pico-primary-hover-border: var(--pico-primary-hover-background);
-      --pico-primary-hover-underline: var(--pico-primary-hover);
-      --pico-primary-focus: oklch(from var(--color) l c h / 0.375);
-      --pico-primary-inverse: oklch(
-        from var(--color) calc((0.7 - l) * infinity) 0 0
-      );
-    }
-  }
-}
-
-/* Map --color → Pico primary tokens (dark mode via data-theme) */
-[data-theme="dark"] {
-  &[variant],
-  [variant],
-  [style*="--color"] {
-    --pico-primary: var(--color);
+    [style*="--color"]
+  ) {
+    --pico-primary: oklch(from var(--color) max(l, 0.7) c h);
     --pico-primary-background: var(--color);
     --pico-primary-border: var(--pico-primary-background);
     --pico-primary-underline: oklch(from var(--color) l c h / 0.5);
@@ -205,6 +173,22 @@ article[variant] {
       from var(--color) calc((0.7 - l) * infinity) 0 0
     );
   }
+}
+
+/* Map --color → Pico primary tokens (dark mode via data-theme) */
+:is([data-theme="dark"]):is([variant], [style*="--color"]) {
+  --pico-primary: oklch(from var(--color) max(l, 0.7) c h);
+  --pico-primary-background: var(--color);
+  --pico-primary-border: var(--pico-primary-background);
+  --pico-primary-underline: oklch(from var(--color) l c h / 0.5);
+  --pico-primary-hover: color-mix(in oklch, var(--color), white 30%);
+  --pico-primary-hover-background: color-mix(in oklch, var(--color), black 20%);
+  --pico-primary-hover-border: var(--pico-primary-hover-background);
+  --pico-primary-hover-underline: var(--pico-primary-hover);
+  --pico-primary-focus: oklch(from var(--color) l c h / 0.375);
+  --pico-primary-inverse: oklch(
+    from var(--color) calc((0.7 - l) * infinity) 0 0
+  );
 }
 
 /* Size attribute */
@@ -538,7 +522,7 @@ small:empty {
 
   &:is(:hover, :active, :focus) {
     --pico-background-color: color-mix(
-      var(--pico-primary-hover-background) 5%,
+      var(--pico-primary-hover-background) 10%,
       transparent
     );
   }
