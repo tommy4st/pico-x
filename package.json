@@ -1,6 +1,6 @@
 {
   "name": "pico-x",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A minimal component and utility layer on top of Pico CSS v2. Semantic HTML first, class-light, fully themeable.",
   "type": "module",
   "main": "./index.js",

@@ -505,11 +505,11 @@
           <label>
             Favorite colors
             <pico-multiselect name="colors" placeholder="Choose colors&hellip;">
-              <option value="red">Red</option>
-              <option value="blue">Blue</option>
-              <option value="green">Green</option>
-              <option value="yellow">Yellow</option>
-              <option value="purple">Purple</option>
+              <option value="red" variant="red">Red</option>
+              <option value="blue" variant="blue">Blue</option>
+              <option value="green" variant="green">Green</option>
+              <option value="yellow" variant="yellow">Yellow</option>
+              <option value="purple" variant="purple">Purple</option>
             </pico-multiselect>
           </label>
         </form>
@@ -546,11 +546,7 @@
           >
             Info Toast
           </button>
-          <button
-            class="raised"
-            data-toast="Operation completed!"
-            data-variant="success"
-          >
+          <button data-toast="Operation completed!" data-variant="success">
             Success Toast
           </button>
           <button data-toast="Please check your input." data-variant="warning">

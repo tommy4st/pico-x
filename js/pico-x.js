@@ -252,6 +252,8 @@ export class PicoMultiselect extends HTMLElement {
       value: opt.value,
       label: opt.textContent.trim(),
       selected: opt.hasAttribute("selected"),
+      variant: opt.getAttribute("variant") || null,
+      disabled: opt.hasAttribute("disabled"),
     }));
 
     this._selected = new Set(
@@ -367,6 +369,9 @@ export class PicoMultiselect extends HTMLElement {
         const tag = document.createElement("pico-tag");
         tag.setAttribute("removable", "");
         tag.setAttribute("data-value", val);
+        if (opt.variant) {
+          tag.setAttribute("variant", opt.variant);
+        }
         tag.textContent = opt.label;
         tag.addEventListener("remove", (e) => {
           e.stopImmediatePropagation();
@@ -404,10 +409,17 @@ export class PicoMultiselect extends HTMLElement {
         "aria-selected",
         String(this._selected.has(opt.value)),
       );
+      if (opt.disabled) {
+        label.setAttribute("aria-disabled", "true");
+      }
 
       const checkbox = document.createElement("input");
       checkbox.type = "checkbox";
       checkbox.checked = this._selected.has(opt.value);
+      checkbox.disabled = opt.disabled;
+      if (opt.variant) {
+        checkbox.setAttribute("variant", opt.variant);
+      }
       checkbox.addEventListener("change", () => {
         if (checkbox.checked) {
           this._selected.add(opt.value);
