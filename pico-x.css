@@ -190,23 +190,18 @@ article[variant] {
 
 /* Map --color → Pico primary tokens (dark mode via data-theme) */
 :is([data-theme="dark"]):is([variant], [style*="--color"]) {
-    --pico-primary: oklch(from var(--color) max(l, 0.7) c h);
-    --pico-primary-background: var(--color);
-    --pico-primary-border: var(--pico-primary-background);
-    --pico-primary-underline: oklch(from var(--color) l c h / 0.5);
-    --pico-primary-hover: color-mix(in oklch, var(--color), white 30%);
-    --pico-primary-hover-background: color-mix(
-      in oklch,
-      var(--color),
-      black 20%
-    );
-    --pico-primary-hover-border: var(--pico-primary-hover-background);
-    --pico-primary-hover-underline: var(--pico-primary-hover);
-    --pico-primary-focus: oklch(from var(--color) l c h / 0.375);
-    --pico-primary-inverse: oklch(
-      from var(--color) calc((0.7 - l) * infinity) 0 0
-    );
-  }
+  --pico-primary: oklch(from var(--color) max(l, 0.7) c h);
+  --pico-primary-background: var(--color);
+  --pico-primary-border: var(--pico-primary-background);
+  --pico-primary-underline: oklch(from var(--color) l c h / 0.5);
+  --pico-primary-hover: color-mix(in oklch, var(--color), white 30%);
+  --pico-primary-hover-background: color-mix(in oklch, var(--color), black 20%);
+  --pico-primary-hover-border: var(--pico-primary-hover-background);
+  --pico-primary-hover-underline: var(--pico-primary-hover);
+  --pico-primary-focus: oklch(from var(--color) l c h / 0.375);
+  --pico-primary-inverse: oklch(
+    from var(--color) calc((0.7 - l) * infinity) 0 0
+  );
 }
 
 /* Size attribute */
@@ -470,11 +465,7 @@ small:empty {
 /* --- Raised / 3D Button --- */
 
 :root {
-  --pico-button-3d-depth: 0.3em;
-  --pico-button-3d-shadow-color: color-mix(
-    var(--pico-muted-color),
-    transparent 50%
-  );
+  --pico-button-3d-depth: 0.25em;
 }
 
 :is(
@@ -492,24 +483,24 @@ small:empty {
     input[type="button"],
     input[type="reset"]
   ) {
+  --depth: var(--pico-button-3d-depth);
+  --shadow-color: oklch(from var(--pico-primary) calc(l - 0.1) 0 0 / 0.3);
   position: relative;
   transform: translateY(0);
-  box-shadow: 0 var(--pico-button-3d-depth) 0 0
-    var(--pico-button-3d-shadow-color);
+  box-shadow: 0 var(--depth) 0 0 var(--shadow-color);
   transition:
     transform 0.1s ease,
     box-shadow 0.1s ease;
 
   &:active {
-    transform: translateY(var(--pico-button-3d-depth));
-    box-shadow: 0 0 0 0 var(--pico-button-3d-shadow-color);
+    transform: translateY(var(--depth));
+    box-shadow: 0 0 0 0 var(--shadow-color);
   }
 
   &:disabled,
   &[aria-busy="true"] {
     transform: translateY(0);
-    box-shadow: 0 var(--pico-button-3d-depth) 0 0
-      var(--pico-button-3d-shadow-color);
+    box-shadow: 0 var(--depth) 0 0 var(--shadow-color);
   }
 }
 
@@ -539,10 +530,9 @@ small:empty {
   --pico-color: var(--pico-primary);
 
   &:is(:hover, :active, :focus) {
-    --pico-background-color: color-mix(
-      var(--pico-primary-hover-background) 20%,
-      transparent
-    );
+    --pico-background-color: oklch(
+      from var(--pico-primary-hover-background) l c h / calc(l * 0.2 + 0.1)
+    ); /* scales transparency with lightness of color */
     --pico-border-color: transparent;
     --pico-color: var(--pico-primary);
   }
@@ -563,7 +553,13 @@ small:empty {
 }*/
 
 /* Label as button */
-:is([role="button"], button, [type="submit"], [type="button"], [type="reset"]):not(#any) {
+:is(
+  [role="button"],
+  button,
+  [type="submit"],
+  [type="button"],
+  [type="reset"]
+):not(#any) {
   cursor: pointer;
   margin-bottom: 0;
   display: inline-flex;
@@ -597,8 +593,13 @@ input[type="checkbox"] {
   border-radius: min(0.2em, var(--pico-border-radius));
 }
 
-/* Chevron for details summary (:not(#any) -> more specific) */
-:is(details.dropdown > summary, details.dropdown > button, details.dropdown > a, details summary):not(#any)::after {
+/* Chevron for details summary via mask (:not(#any) -> more specific) */
+:is(
+    details.dropdown > summary,
+    details.dropdown > button,
+    details.dropdown > a,
+    details summary
+  ):not(#any)::after {
   mask-image: var(--pico-icon-chevron);
   mask-position: right center;
   mask-size: 1rem auto;
@@ -681,6 +682,10 @@ input[type="checkbox"] {
   h5,
   h6 {
     color: var(--pico-primary);
+  }
+
+  button.close {
+    margin-top: 0.25em;
   }
 }
 
@@ -771,7 +776,11 @@ pico-multiselect {
         var(--pico-nav-link-spacing-vertical) - var(--pico-border-width) * 2
       )
       var(--pico-nav-link-spacing-horizontal);
-    height: calc(1rem * var(--pico-line-height) + var(--pico-form-element-spacing-vertical) * 2 + var(--pico-border-width) * 2);
+    height: calc(
+      1rem * var(--pico-line-height) +
+        var(--pico-form-element-spacing-vertical) * 2 +
+        var(--pico-border-width) * 2
+    );
     border: var(--pico-border-width) solid var(--pico-form-element-border-color);
     border-radius: var(--pico-border-radius);
     background: var(--pico-form-element-background-color);
@@ -994,8 +1003,7 @@ dialog > article > footer {
   input[type="button"],
   input[type="reset"]
 ).icon-only {
-  /* HACK passt das so??? */
-  --pico-form-element-spacing-horizontal: .85em;
+  --pico-form-element-spacing-horizontal: 0.85em;
 }
 
 details.dropdown.no-chevron::after {
