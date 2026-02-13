@@ -484,7 +484,21 @@ small:empty {
     input[type="reset"]
   ) {
   --depth: var(--pico-button-3d-depth);
-  --shadow-color: oklch(from var(--pico-primary) calc(l - 0.1) 0 0 / 0.3);
+  --shadow-color: oklch(
+    from var(--pico-primary-background) calc(l - 0.15) c h / 1
+  );
+
+  &.secondary {
+    --shadow-color: oklch(
+      from var(--pico-secondary-background) max(0.05, calc(l - 0.15)) c h / 1
+    );
+  }
+  &.contrast {
+    --shadow-color: oklch(
+      from var(--pico-contrast-background) max(0.05, calc(l - 0.15)) c h / 1
+    );
+  }
+
   position: relative;
   transform: translateY(0);
   box-shadow: 0 var(--depth) 0 0 var(--shadow-color);
